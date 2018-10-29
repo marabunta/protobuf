@@ -3,11 +3,11 @@ syntax = "proto3";
 package api;
 
 message PingMessage {
-  string ping = 1;
+  string msg = 1;
 }
 
 message PongMessage {
-  string pong = 1;
+  string msg = 1;
 }
 
 service Status {
