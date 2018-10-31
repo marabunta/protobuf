@@ -2,14 +2,14 @@ syntax = "proto3";
 
 package marabunta;
 
-message PingMessage {
+message StreamRequest {
   string msg = 1;
 }
 
-message PongMessage {
+message StreamResponse {
   string msg = 1;
 }
 
-service Status {
-  rpc Ping(stream PingMessage) returns (stream PongMessage);
+service Marabunta {
+  rpc Stream(stream StreamRequest) returns (stream StreamResponse);
 }
