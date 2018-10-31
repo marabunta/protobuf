@@ -10,6 +10,15 @@ message StreamResponse {
   string msg = 1;
 }
 
+message RegisterRequest {
+  string name = 1;
+}
+
+message RegisterResponse {
+  bool ok = 1;
+}
+
 service Marabunta {
   rpc Stream(stream StreamRequest) returns (stream StreamResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
 }
