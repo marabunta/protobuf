@@ -13,10 +13,18 @@ message StreamRequest {
 
 message StreamResponse {
   oneof event {
-    Ping e_ping = 1;
-    Status e_status = 2;
+    Exec e_exec = 1;
+    Ping e_ping = 2;
+    Pulse e_pulse = 3;
+    Status e_status = 4;
+  }
+  message Exec {
+    string msg = 1;
   }
   message Ping {
+    string msg = 1;
+  }
+  message Pulse {
     string msg = 1;
   }
   message Status {
