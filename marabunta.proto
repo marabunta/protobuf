@@ -5,6 +5,7 @@ package marabunta;
 service Marabunta {
   rpc Stream(stream StreamRequest) returns (stream StreamResponse);
   rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
 }
 
 message StreamRequest {
@@ -37,5 +38,13 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
+  bool ok = 1;
+}
+
+message UpdateRequest {
+  string name = 1;
+}
+
+message UpdateResponse {
   bool ok = 1;
 }
