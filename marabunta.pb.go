@@ -63,7 +63,7 @@ func (m *StreamRequest) GetMsg() string {
 
 type StreamResponse struct {
 	// Types that are valid to be assigned to Event:
-	//	*StreamResponse_EExec
+	//	*StreamResponse_EDo
 	//	*StreamResponse_EPing
 	//	*StreamResponse_EPulse
 	//	*StreamResponse_EStatus
@@ -102,8 +102,8 @@ type isStreamResponse_Event interface {
 	isStreamResponse_Event()
 }
 
-type StreamResponse_EExec struct {
-	EExec *StreamResponse_Exec `protobuf:"bytes,1,opt,name=e_exec,json=eExec,proto3,oneof"`
+type StreamResponse_EDo struct {
+	EDo *StreamResponse_Do `protobuf:"bytes,1,opt,name=e_do,json=eDo,proto3,oneof"`
 }
 
 type StreamResponse_EPing struct {
@@ -118,7 +118,7 @@ type StreamResponse_EStatus struct {
 	EStatus *StreamResponse_Status `protobuf:"bytes,4,opt,name=e_status,json=eStatus,proto3,oneof"`
 }
 
-func (*StreamResponse_EExec) isStreamResponse_Event() {}
+func (*StreamResponse_EDo) isStreamResponse_Event() {}
 
 func (*StreamResponse_EPing) isStreamResponse_Event() {}
 
@@ -133,9 +133,9 @@ func (m *StreamResponse) GetEvent() isStreamResponse_Event {
 	return nil
 }
 
-func (m *StreamResponse) GetEExec() *StreamResponse_Exec {
-	if x, ok := m.GetEvent().(*StreamResponse_EExec); ok {
-		return x.EExec
+func (m *StreamResponse) GetEDo() *StreamResponse_Do {
+	if x, ok := m.GetEvent().(*StreamResponse_EDo); ok {
+		return x.EDo
 	}
 	return nil
 }
@@ -164,7 +164,7 @@ func (m *StreamResponse) GetEStatus() *StreamResponse_Status {
 // XXX_OneofFuncs is for the internal use of the proto package.
 func (*StreamResponse) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
 	return _StreamResponse_OneofMarshaler, _StreamResponse_OneofUnmarshaler, _StreamResponse_OneofSizer, []interface{}{
-		(*StreamResponse_EExec)(nil),
+		(*StreamResponse_EDo)(nil),
 		(*StreamResponse_EPing)(nil),
 		(*StreamResponse_EPulse)(nil),
 		(*StreamResponse_EStatus)(nil),
@@ -175,9 +175,9 @@ func _StreamResponse_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
 	m := msg.(*StreamResponse)
 	// event
 	switch x := m.Event.(type) {
-	case *StreamResponse_EExec:
+	case *StreamResponse_EDo:
 		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.EExec); err != nil {
+		if err := b.EncodeMessage(x.EDo); err != nil {
 			return err
 		}
 	case *StreamResponse_EPing:
@@ -205,13 +205,13 @@ func _StreamResponse_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
 func _StreamResponse_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
 	m := msg.(*StreamResponse)
 	switch tag {
-	case 1: // event.e_exec
+	case 1: // event.e_do
 		if wire != proto.WireBytes {
 			return true, proto.ErrInternalBadWireType
 		}
-		msg := new(StreamResponse_Exec)
+		msg := new(StreamResponse_Do)
 		err := b.DecodeMessage(msg)
-		m.Event = &StreamResponse_EExec{msg}
+		m.Event = &StreamResponse_EDo{msg}
 		return true, err
 	case 2: // event.e_ping
 		if wire != proto.WireBytes {
@@ -246,8 +246,8 @@ func _StreamResponse_OneofSizer(msg proto.Message) (n int) {
 	m := msg.(*StreamResponse)
 	// event
 	switch x := m.Event.(type) {
-	case *StreamResponse_EExec:
-		s := proto.Size(x.EExec)
+	case *StreamResponse_EDo:
+		s := proto.Size(x.EDo)
 		n += 1 // tag and wire
 		n += proto.SizeVarint(uint64(s))
 		n += s
@@ -273,43 +273,43 @@ func _StreamResponse_OneofSizer(msg proto.Message) (n int) {
 	return n
 }
 
-type StreamResponse_Exec struct {
-	Msg                  string   `protobuf:"bytes,1,opt,name=msg,proto3" json:"msg,omitempty"`
+type StreamResponse_Do struct {
+	Uuid                 []byte   `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *StreamResponse_Exec) Reset()         { *m = StreamResponse_Exec{} }
-func (m *StreamResponse_Exec) String() string { return proto.CompactTextString(m) }
-func (*StreamResponse_Exec) ProtoMessage()    {}
-func (*StreamResponse_Exec) Descriptor() ([]byte, []int) {
+func (m *StreamResponse_Do) Reset()         { *m = StreamResponse_Do{} }
+func (m *StreamResponse_Do) String() string { return proto.CompactTextString(m) }
+func (*StreamResponse_Do) ProtoMessage()    {}
+func (*StreamResponse_Do) Descriptor() ([]byte, []int) {
 	return fileDescriptor_3f992b7cdbde158a, []int{1, 0}
 }
 
-func (m *StreamResponse_Exec) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_StreamResponse_Exec.Unmarshal(m, b)
+func (m *StreamResponse_Do) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StreamResponse_Do.Unmarshal(m, b)
 }
-func (m *StreamResponse_Exec) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_StreamResponse_Exec.Marshal(b, m, deterministic)
+func (m *StreamResponse_Do) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StreamResponse_Do.Marshal(b, m, deterministic)
 }
-func (m *StreamResponse_Exec) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_StreamResponse_Exec.Merge(m, src)
+func (m *StreamResponse_Do) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StreamResponse_Do.Merge(m, src)
 }
-func (m *StreamResponse_Exec) XXX_Size() int {
-	return xxx_messageInfo_StreamResponse_Exec.Size(m)
+func (m *StreamResponse_Do) XXX_Size() int {
+	return xxx_messageInfo_StreamResponse_Do.Size(m)
 }
-func (m *StreamResponse_Exec) XXX_DiscardUnknown() {
-	xxx_messageInfo_StreamResponse_Exec.DiscardUnknown(m)
+func (m *StreamResponse_Do) XXX_DiscardUnknown() {
+	xxx_messageInfo_StreamResponse_Do.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_StreamResponse_Exec proto.InternalMessageInfo
+var xxx_messageInfo_StreamResponse_Do proto.InternalMessageInfo
 
-func (m *StreamResponse_Exec) GetMsg() string {
+func (m *StreamResponse_Do) GetUuid() []byte {
 	if m != nil {
-		return m.Msg
+		return m.Uuid
 	}
-	return ""
+	return nil
 }
 
 type StreamResponse_Ping struct {
@@ -429,6 +429,202 @@ func (m *StreamResponse_Status) GetMsg() string {
 	return ""
 }
 
+type PayloadRequest struct {
+	Uuid                 []byte   `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PayloadRequest) Reset()         { *m = PayloadRequest{} }
+func (m *PayloadRequest) String() string { return proto.CompactTextString(m) }
+func (*PayloadRequest) ProtoMessage()    {}
+func (*PayloadRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3f992b7cdbde158a, []int{2}
+}
+
+func (m *PayloadRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PayloadRequest.Unmarshal(m, b)
+}
+func (m *PayloadRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PayloadRequest.Marshal(b, m, deterministic)
+}
+func (m *PayloadRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PayloadRequest.Merge(m, src)
+}
+func (m *PayloadRequest) XXX_Size() int {
+	return xxx_messageInfo_PayloadRequest.Size(m)
+}
+func (m *PayloadRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_PayloadRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PayloadRequest proto.InternalMessageInfo
+
+func (m *PayloadRequest) GetUuid() []byte {
+	if m != nil {
+		return m.Uuid
+	}
+	return nil
+}
+
+type PayloadResponse struct {
+	Uuid                 []byte        `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	Task                 string        `protobuf:"bytes,2,opt,name=task,proto3" json:"task,omitempty"`
+	Attachment           []*Attachment `protobuf:"bytes,3,rep,name=attachment,proto3" json:"attachment,omitempty"`
+	Metadata             []*Metadata   `protobuf:"bytes,4,rep,name=metadata,proto3" json:"metadata,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
+	XXX_unrecognized     []byte        `json:"-"`
+	XXX_sizecache        int32         `json:"-"`
+}
+
+func (m *PayloadResponse) Reset()         { *m = PayloadResponse{} }
+func (m *PayloadResponse) String() string { return proto.CompactTextString(m) }
+func (*PayloadResponse) ProtoMessage()    {}
+func (*PayloadResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3f992b7cdbde158a, []int{3}
+}
+
+func (m *PayloadResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_PayloadResponse.Unmarshal(m, b)
+}
+func (m *PayloadResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_PayloadResponse.Marshal(b, m, deterministic)
+}
+func (m *PayloadResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PayloadResponse.Merge(m, src)
+}
+func (m *PayloadResponse) XXX_Size() int {
+	return xxx_messageInfo_PayloadResponse.Size(m)
+}
+func (m *PayloadResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_PayloadResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PayloadResponse proto.InternalMessageInfo
+
+func (m *PayloadResponse) GetUuid() []byte {
+	if m != nil {
+		return m.Uuid
+	}
+	return nil
+}
+
+func (m *PayloadResponse) GetTask() string {
+	if m != nil {
+		return m.Task
+	}
+	return ""
+}
+
+func (m *PayloadResponse) GetAttachment() []*Attachment {
+	if m != nil {
+		return m.Attachment
+	}
+	return nil
+}
+
+func (m *PayloadResponse) GetMetadata() []*Metadata {
+	if m != nil {
+		return m.Metadata
+	}
+	return nil
+}
+
+type Attachment struct {
+	Path                 string   `protobuf:"bytes,1,opt,name=path,proto3" json:"path,omitempty"`
+	File                 []byte   `protobuf:"bytes,2,opt,name=file,proto3" json:"file,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Attachment) Reset()         { *m = Attachment{} }
+func (m *Attachment) String() string { return proto.CompactTextString(m) }
+func (*Attachment) ProtoMessage()    {}
+func (*Attachment) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3f992b7cdbde158a, []int{4}
+}
+
+func (m *Attachment) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Attachment.Unmarshal(m, b)
+}
+func (m *Attachment) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Attachment.Marshal(b, m, deterministic)
+}
+func (m *Attachment) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Attachment.Merge(m, src)
+}
+func (m *Attachment) XXX_Size() int {
+	return xxx_messageInfo_Attachment.Size(m)
+}
+func (m *Attachment) XXX_DiscardUnknown() {
+	xxx_messageInfo_Attachment.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Attachment proto.InternalMessageInfo
+
+func (m *Attachment) GetPath() string {
+	if m != nil {
+		return m.Path
+	}
+	return ""
+}
+
+func (m *Attachment) GetFile() []byte {
+	if m != nil {
+		return m.File
+	}
+	return nil
+}
+
+type Metadata struct {
+	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Val                  string   `protobuf:"bytes,2,opt,name=val,proto3" json:"val,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *Metadata) Reset()         { *m = Metadata{} }
+func (m *Metadata) String() string { return proto.CompactTextString(m) }
+func (*Metadata) ProtoMessage()    {}
+func (*Metadata) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3f992b7cdbde158a, []int{5}
+}
+
+func (m *Metadata) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_Metadata.Unmarshal(m, b)
+}
+func (m *Metadata) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_Metadata.Marshal(b, m, deterministic)
+}
+func (m *Metadata) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Metadata.Merge(m, src)
+}
+func (m *Metadata) XXX_Size() int {
+	return xxx_messageInfo_Metadata.Size(m)
+}
+func (m *Metadata) XXX_DiscardUnknown() {
+	xxx_messageInfo_Metadata.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_Metadata proto.InternalMessageInfo
+
+func (m *Metadata) GetKey() string {
+	if m != nil {
+		return m.Key
+	}
+	return ""
+}
+
+func (m *Metadata) GetVal() string {
+	if m != nil {
+		return m.Val
+	}
+	return ""
+}
+
 type RegisterRequest struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -440,7 +636,7 @@ func (m *RegisterRequest) Reset()         { *m = RegisterRequest{} }
 func (m *RegisterRequest) String() string { return proto.CompactTextString(m) }
 func (*RegisterRequest) ProtoMessage()    {}
 func (*RegisterRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3f992b7cdbde158a, []int{2}
+	return fileDescriptor_3f992b7cdbde158a, []int{6}
 }
 
 func (m *RegisterRequest) XXX_Unmarshal(b []byte) error {
@@ -479,7 +675,7 @@ func (m *RegisterResponse) Reset()         { *m = RegisterResponse{} }
 func (m *RegisterResponse) String() string { return proto.CompactTextString(m) }
 func (*RegisterResponse) ProtoMessage()    {}
 func (*RegisterResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3f992b7cdbde158a, []int{3}
+	return fileDescriptor_3f992b7cdbde158a, []int{7}
 }
 
 func (m *RegisterResponse) XXX_Unmarshal(b []byte) error {
@@ -518,7 +714,7 @@ func (m *UpdateRequest) Reset()         { *m = UpdateRequest{} }
 func (m *UpdateRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateRequest) ProtoMessage()    {}
 func (*UpdateRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3f992b7cdbde158a, []int{4}
+	return fileDescriptor_3f992b7cdbde158a, []int{8}
 }
 
 func (m *UpdateRequest) XXX_Unmarshal(b []byte) error {
@@ -557,7 +753,7 @@ func (m *UpdateResponse) Reset()         { *m = UpdateResponse{} }
 func (m *UpdateResponse) String() string { return proto.CompactTextString(m) }
 func (*UpdateResponse) ProtoMessage()    {}
 func (*UpdateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3f992b7cdbde158a, []int{5}
+	return fileDescriptor_3f992b7cdbde158a, []int{9}
 }
 
 func (m *UpdateResponse) XXX_Unmarshal(b []byte) error {
@@ -588,10 +784,14 @@ func (m *UpdateResponse) GetOk() bool {
 func init() {
 	proto.RegisterType((*StreamRequest)(nil), "marabunta.StreamRequest")
 	proto.RegisterType((*StreamResponse)(nil), "marabunta.StreamResponse")
-	proto.RegisterType((*StreamResponse_Exec)(nil), "marabunta.StreamResponse.Exec")
+	proto.RegisterType((*StreamResponse_Do)(nil), "marabunta.StreamResponse.Do")
 	proto.RegisterType((*StreamResponse_Ping)(nil), "marabunta.StreamResponse.Ping")
 	proto.RegisterType((*StreamResponse_Pulse)(nil), "marabunta.StreamResponse.Pulse")
 	proto.RegisterType((*StreamResponse_Status)(nil), "marabunta.StreamResponse.Status")
+	proto.RegisterType((*PayloadRequest)(nil), "marabunta.PayloadRequest")
+	proto.RegisterType((*PayloadResponse)(nil), "marabunta.PayloadResponse")
+	proto.RegisterType((*Attachment)(nil), "marabunta.Attachment")
+	proto.RegisterType((*Metadata)(nil), "marabunta.Metadata")
 	proto.RegisterType((*RegisterRequest)(nil), "marabunta.RegisterRequest")
 	proto.RegisterType((*RegisterResponse)(nil), "marabunta.RegisterResponse")
 	proto.RegisterType((*UpdateRequest)(nil), "marabunta.UpdateRequest")
@@ -601,30 +801,39 @@ func init() {
 func init() { proto.RegisterFile("marabunta.proto", fileDescriptor_3f992b7cdbde158a) }
 
 var fileDescriptor_3f992b7cdbde158a = []byte{
-	// 355 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x93, 0x4f, 0x4b, 0xf3, 0x40,
-	0x10, 0xc6, 0x9b, 0xb4, 0x4d, 0xdb, 0x79, 0xe9, 0x1f, 0xf6, 0x94, 0xe6, 0x05, 0xad, 0x11, 0xa1,
-	0xa7, 0x22, 0xf5, 0x20, 0x08, 0x3d, 0xa8, 0x08, 0xbd, 0x08, 0xb2, 0xc5, 0x73, 0xd9, 0xd6, 0x21,
-	0x94, 0x9a, 0x4d, 0xcc, 0x6e, 0xa4, 0x9f, 0xd3, 0x6f, 0xe2, 0x37, 0x90, 0x9d, 0x34, 0xd6, 0x98,
-	0xb6, 0xde, 0x1e, 0x32, 0xbf, 0x67, 0xe6, 0x99, 0x59, 0x02, 0xdd, 0x50, 0x24, 0x62, 0x91, 0x4a,
-	0x2d, 0x46, 0x71, 0x12, 0xe9, 0x88, 0xb5, 0xbe, 0x3f, 0xf8, 0x67, 0xd0, 0x9e, 0xe9, 0x04, 0x45,
-	0xc8, 0xf1, 0x2d, 0x45, 0xa5, 0x59, 0x0f, 0xaa, 0xa1, 0x0a, 0x5c, 0x6b, 0x60, 0x0d, 0x5b, 0xdc,
-	0x48, 0xff, 0xd3, 0x86, 0x4e, 0xce, 0xa8, 0x38, 0x92, 0x0a, 0xd9, 0x35, 0x38, 0x38, 0xc7, 0x0d,
-	0x2e, 0x89, 0xfb, 0x37, 0x3e, 0x19, 0xed, 0x46, 0x14, 0xd1, 0xd1, 0xc3, 0x06, 0x97, 0xd3, 0x0a,
-	0xaf, 0xa3, 0x11, 0x99, 0x31, 0x5e, 0xc9, 0xc0, 0xb5, 0xff, 0x32, 0x3e, 0xad, 0x64, 0x40, 0x46,
-	0x23, 0xd8, 0x0d, 0x34, 0x70, 0x1e, 0xa7, 0xaf, 0x0a, 0xdd, 0x2a, 0x39, 0x4f, 0x8f, 0x38, 0x0d,
-	0x36, 0xad, 0x70, 0x07, 0x49, 0xb1, 0x09, 0x34, 0x71, 0xae, 0xb4, 0xd0, 0xa9, 0x72, 0x6b, 0x64,
-	0x1e, 0x1c, 0x36, 0xcf, 0x88, 0x9b, 0x56, 0x78, 0x03, 0x33, 0xe9, 0xb9, 0x50, 0xa3, 0xec, 0xa5,
-	0xcb, 0x98, 0x0a, 0x85, 0x2b, 0x57, 0xfa, 0x50, 0xcf, 0x66, 0x97, 0x4b, 0x1e, 0x38, 0x59, 0xe3,
-	0x72, 0xed, 0xae, 0x01, 0x75, 0x7c, 0x47, 0xa9, 0xfd, 0x0b, 0xe8, 0x72, 0x0c, 0x56, 0x4a, 0x63,
-	0x92, 0x3f, 0x0c, 0x83, 0x9a, 0x14, 0x21, 0x6e, 0x71, 0xd2, 0xbe, 0x0f, 0xbd, 0x1d, 0xb6, 0x7d,
-	0x9b, 0x0e, 0xd8, 0xd1, 0x9a, 0xa8, 0x26, 0xb7, 0xa3, 0xb5, 0x7f, 0x0e, 0xed, 0xe7, 0xf8, 0x45,
-	0x68, 0x3c, 0xd6, 0x68, 0x00, 0x9d, 0x1c, 0xda, 0xdf, 0x66, 0xfc, 0x61, 0x41, 0xeb, 0x31, 0x3f,
-	0x1a, 0xbb, 0x35, 0x4b, 0x98, 0xbb, 0x31, 0x77, 0xcf, 0x29, 0x69, 0x8e, 0xd7, 0x3f, 0x78, 0xe4,
-	0xa1, 0x75, 0x69, 0xb1, 0x7b, 0x68, 0xe6, 0xd9, 0x99, 0xf7, 0x03, 0xfd, 0xb5, 0xb7, 0xf7, 0x7f,
-	0x6f, 0x6d, 0x9b, 0x72, 0x02, 0x4e, 0x96, 0xbb, 0x90, 0xa3, 0xb0, 0x6f, 0x21, 0x47, 0x71, 0xc9,
-	0x85, 0x43, 0xff, 0xc3, 0xd5, 0x57, 0x00, 0x00, 0x00, 0xff, 0xff, 0x5f, 0xc7, 0x88, 0x80, 0x22,
-	0x03, 0x00, 0x00,
+	// 509 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x54, 0x5d, 0x8b, 0xd3, 0x40,
+	0x14, 0x6d, 0x3e, 0x9a, 0xa6, 0x77, 0x77, 0xdb, 0x65, 0x44, 0x48, 0xa3, 0x68, 0x1d, 0x15, 0xfa,
+	0x54, 0xb5, 0x2a, 0x82, 0xb0, 0xe0, 0x6a, 0x1f, 0xfa, 0xb2, 0xb0, 0xcc, 0xe2, 0x73, 0x99, 0x35,
+	0xd7, 0x6e, 0x48, 0x93, 0x89, 0xcd, 0x64, 0xa1, 0xff, 0xc3, 0x3f, 0xe0, 0xef, 0xf3, 0x4f, 0xc8,
+	0x4c, 0x92, 0x36, 0xb1, 0xe9, 0xbe, 0x1d, 0xe6, 0x9e, 0x73, 0xe6, 0xde, 0x73, 0x33, 0x81, 0x61,
+	0xcc, 0x37, 0xfc, 0x36, 0x4f, 0x24, 0x9f, 0xa6, 0x1b, 0x21, 0x05, 0xe9, 0xef, 0x0e, 0xe8, 0x0b,
+	0x38, 0xbb, 0x91, 0x1b, 0xe4, 0x31, 0xc3, 0x5f, 0x39, 0x66, 0x92, 0x9c, 0x83, 0x15, 0x67, 0x2b,
+	0xcf, 0x18, 0x1b, 0x93, 0x3e, 0x53, 0x90, 0xfe, 0x35, 0x61, 0x50, 0x71, 0xb2, 0x54, 0x24, 0x19,
+	0x92, 0x77, 0x60, 0xe3, 0x32, 0x10, 0x9a, 0x75, 0x32, 0x7b, 0x3a, 0xdd, 0x5f, 0xd0, 0x24, 0x4e,
+	0xe7, 0x62, 0xd1, 0x61, 0x16, 0xce, 0x05, 0xf9, 0x04, 0x0e, 0x2e, 0xd3, 0x30, 0x59, 0x79, 0xa6,
+	0x16, 0x3d, 0x3b, 0x2e, 0xba, 0x0e, 0x93, 0xd5, 0xa2, 0xc3, 0xba, 0xa8, 0x00, 0xf9, 0x0c, 0x3d,
+	0x5c, 0xa6, 0xf9, 0x3a, 0x43, 0xcf, 0xd2, 0xca, 0xe7, 0x0f, 0x28, 0x15, 0x6d, 0xd1, 0x61, 0x0e,
+	0x6a, 0x44, 0x2e, 0xc0, 0xc5, 0x65, 0x26, 0xb9, 0xcc, 0x33, 0xcf, 0xd6, 0xe2, 0xf1, 0x71, 0xf1,
+	0x8d, 0xe6, 0x2d, 0x3a, 0xac, 0x87, 0x05, 0xf4, 0x3d, 0x30, 0xe7, 0x82, 0x10, 0xb0, 0xf3, 0x3c,
+	0x0c, 0xf4, 0xb0, 0xa7, 0x4c, 0x63, 0xdf, 0x03, 0x5b, 0x37, 0x77, 0x90, 0x96, 0x3f, 0x82, 0x6e,
+	0x71, 0xf7, 0x61, 0xc9, 0x07, 0xa7, 0x30, 0x3e, 0xac, 0x7d, 0xed, 0x41, 0x17, 0xef, 0x31, 0x91,
+	0xf4, 0x15, 0x0c, 0xae, 0xf9, 0x76, 0x2d, 0x78, 0x50, 0x6d, 0xa4, 0xe5, 0x7e, 0xfa, 0xc7, 0x80,
+	0xe1, 0x8e, 0x56, 0x2e, 0xa5, 0x85, 0xa7, 0xce, 0x24, 0xcf, 0x22, 0x9d, 0x79, 0x9f, 0x69, 0x4c,
+	0x3e, 0x02, 0x70, 0x29, 0xf9, 0x8f, 0xbb, 0x18, 0x13, 0xe9, 0x59, 0x63, 0x6b, 0x72, 0x32, 0x7b,
+	0x5c, 0x8b, 0xe5, 0x72, 0x57, 0x64, 0x35, 0x22, 0x79, 0x03, 0x6e, 0x8c, 0x92, 0x07, 0x5c, 0x72,
+	0xcf, 0xd6, 0xa2, 0x47, 0x35, 0xd1, 0x55, 0x59, 0x62, 0x3b, 0x12, 0xfd, 0x00, 0xb0, 0xb7, 0x52,
+	0x9d, 0xa4, 0x5c, 0xde, 0x95, 0x33, 0x6b, 0xac, 0xce, 0x7e, 0x86, 0x6b, 0xd4, 0xdd, 0x9d, 0x32,
+	0x8d, 0xe9, 0x14, 0xdc, 0xca, 0x4b, 0xc5, 0x14, 0xe1, 0xb6, 0x8a, 0x29, 0xc2, 0xad, 0x3a, 0xb9,
+	0xe7, 0xeb, 0x72, 0x1c, 0x05, 0xe9, 0x6b, 0x18, 0x32, 0x5c, 0x85, 0x99, 0xc4, 0x4d, 0x2d, 0xb0,
+	0x84, 0xc7, 0x58, 0x5d, 0xa5, 0x30, 0xa5, 0x70, 0xbe, 0xa7, 0x95, 0x81, 0x0d, 0xc0, 0x14, 0x91,
+	0x66, 0xb9, 0xcc, 0x14, 0x11, 0x7d, 0x09, 0x67, 0xdf, 0xd3, 0x80, 0x4b, 0x7c, 0xc8, 0x68, 0x0c,
+	0x83, 0x8a, 0xd4, 0x6e, 0x33, 0xfb, 0x6d, 0x42, 0xff, 0xaa, 0x0a, 0x86, 0x7c, 0x81, 0x5e, 0xb9,
+	0x28, 0x32, 0xaa, 0xe5, 0xd5, 0xdc, 0xb1, 0xef, 0xb7, 0x95, 0x4a, 0xff, 0x6f, 0xe0, 0x56, 0xad,
+	0x93, 0x3a, 0xef, 0xbf, 0xb1, 0xfd, 0x27, 0xad, 0xb5, 0xd2, 0xe4, 0x52, 0x7d, 0x7b, 0xea, 0x73,
+	0x27, 0x5e, 0xcb, 0x0b, 0x28, 0x0c, 0x46, 0x47, 0xdf, 0xc6, 0xc4, 0x78, 0x6b, 0x90, 0x0b, 0x70,
+	0x8a, 0xc9, 0x1b, 0x16, 0x8d, 0xc4, 0x1a, 0x16, 0xcd, 0x98, 0x6e, 0x1d, 0xfd, 0xef, 0x79, 0xff,
+	0x2f, 0x00, 0x00, 0xff, 0xff, 0xae, 0x02, 0x47, 0x21, 0x8e, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -639,8 +848,9 @@ const _ = grpc.SupportPackageIsVersion4
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MarabuntaClient interface {
-	Stream(ctx context.Context, opts ...grpc.CallOption) (Marabunta_StreamClient, error)
+	Payload(ctx context.Context, in *PayloadRequest, opts ...grpc.CallOption) (*PayloadResponse, error)
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error)
+	Stream(ctx context.Context, opts ...grpc.CallOption) (Marabunta_StreamClient, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
 }
 
@@ -650,6 +860,24 @@ type marabuntaClient struct {
 
 func NewMarabuntaClient(cc *grpc.ClientConn) MarabuntaClient {
 	return &marabuntaClient{cc}
+}
+
+func (c *marabuntaClient) Payload(ctx context.Context, in *PayloadRequest, opts ...grpc.CallOption) (*PayloadResponse, error) {
+	out := new(PayloadResponse)
+	err := c.cc.Invoke(ctx, "/marabunta.Marabunta/Payload", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marabuntaClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
+	out := new(RegisterResponse)
+	err := c.cc.Invoke(ctx, "/marabunta.Marabunta/Register", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *marabuntaClient) Stream(ctx context.Context, opts ...grpc.CallOption) (Marabunta_StreamClient, error) {
@@ -683,15 +911,6 @@ func (x *marabuntaStreamClient) Recv() (*StreamResponse, error) {
 	return m, nil
 }
 
-func (c *marabuntaClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterResponse, error) {
-	out := new(RegisterResponse)
-	err := c.cc.Invoke(ctx, "/marabunta.Marabunta/Register", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *marabuntaClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
 	out := new(UpdateResponse)
 	err := c.cc.Invoke(ctx, "/marabunta.Marabunta/Update", in, out, opts...)
@@ -703,13 +922,50 @@ func (c *marabuntaClient) Update(ctx context.Context, in *UpdateRequest, opts ..
 
 // MarabuntaServer is the server API for Marabunta service.
 type MarabuntaServer interface {
-	Stream(Marabunta_StreamServer) error
+	Payload(context.Context, *PayloadRequest) (*PayloadResponse, error)
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
+	Stream(Marabunta_StreamServer) error
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
 }
 
 func RegisterMarabuntaServer(s *grpc.Server, srv MarabuntaServer) {
 	s.RegisterService(&_Marabunta_serviceDesc, srv)
+}
+
+func _Marabunta_Payload_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PayloadRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarabuntaServer).Payload(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/marabunta.Marabunta/Payload",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarabuntaServer).Payload(ctx, req.(*PayloadRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Marabunta_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarabuntaServer).Register(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/marabunta.Marabunta/Register",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarabuntaServer).Register(ctx, req.(*RegisterRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Marabunta_Stream_Handler(srv interface{}, stream grpc.ServerStream) error {
@@ -738,24 +994,6 @@ func (x *marabuntaStreamServer) Recv() (*StreamRequest, error) {
 	return m, nil
 }
 
-func _Marabunta_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegisterRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MarabuntaServer).Register(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/marabunta.Marabunta/Register",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MarabuntaServer).Register(ctx, req.(*RegisterRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _Marabunta_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
@@ -778,6 +1016,10 @@ var _Marabunta_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "marabunta.Marabunta",
 	HandlerType: (*MarabuntaServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Payload",
+			Handler:    _Marabunta_Payload_Handler,
+		},
 		{
 			MethodName: "Register",
 			Handler:    _Marabunta_Register_Handler,
