@@ -4,7 +4,6 @@ package marabunta;
 
 service Marabunta {
   rpc Payload(PayloadRequest) returns (PayloadResponse);
-  rpc Register(RegisterRequest) returns (RegisterResponse);
   rpc Stream(stream StreamRequest) returns (stream StreamResponse);
   rpc Update(UpdateRequest) returns (UpdateResponse);
 }
@@ -53,14 +52,6 @@ message Attachment {
 message Metadata {
   string key = 1;
   string val = 2;
-}
-
-message RegisterRequest {
-  string name = 1;
-}
-
-message RegisterResponse {
-  bool ok = 1;
 }
 
 message UpdateRequest {
