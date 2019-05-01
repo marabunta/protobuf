@@ -4,10 +4,12 @@
 package marabunta
 
 import (
+	context "context"
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
-	context "golang.org/x/net/context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -20,7 +22,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type StreamRequest struct {
 	Msg                  string   `protobuf:"bytes,1,opt,name=msg,proto3" json:"msg,omitempty"`
@@ -161,116 +163,14 @@ func (m *StreamResponse) GetEStatus() *StreamResponse_Status {
 	return nil
 }
 
-// XXX_OneofFuncs is for the internal use of the proto package.
-func (*StreamResponse) XXX_OneofFuncs() (func(msg proto.Message, b *proto.Buffer) error, func(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error), func(msg proto.Message) (n int), []interface{}) {
-	return _StreamResponse_OneofMarshaler, _StreamResponse_OneofUnmarshaler, _StreamResponse_OneofSizer, []interface{}{
+// XXX_OneofWrappers is for the internal use of the proto package.
+func (*StreamResponse) XXX_OneofWrappers() []interface{} {
+	return []interface{}{
 		(*StreamResponse_EDo)(nil),
 		(*StreamResponse_EPing)(nil),
 		(*StreamResponse_EPulse)(nil),
 		(*StreamResponse_EStatus)(nil),
 	}
-}
-
-func _StreamResponse_OneofMarshaler(msg proto.Message, b *proto.Buffer) error {
-	m := msg.(*StreamResponse)
-	// event
-	switch x := m.Event.(type) {
-	case *StreamResponse_EDo:
-		b.EncodeVarint(1<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.EDo); err != nil {
-			return err
-		}
-	case *StreamResponse_EPing:
-		b.EncodeVarint(2<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.EPing); err != nil {
-			return err
-		}
-	case *StreamResponse_EPulse:
-		b.EncodeVarint(3<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.EPulse); err != nil {
-			return err
-		}
-	case *StreamResponse_EStatus:
-		b.EncodeVarint(4<<3 | proto.WireBytes)
-		if err := b.EncodeMessage(x.EStatus); err != nil {
-			return err
-		}
-	case nil:
-	default:
-		return fmt.Errorf("StreamResponse.Event has unexpected type %T", x)
-	}
-	return nil
-}
-
-func _StreamResponse_OneofUnmarshaler(msg proto.Message, tag, wire int, b *proto.Buffer) (bool, error) {
-	m := msg.(*StreamResponse)
-	switch tag {
-	case 1: // event.e_do
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(StreamResponse_Do)
-		err := b.DecodeMessage(msg)
-		m.Event = &StreamResponse_EDo{msg}
-		return true, err
-	case 2: // event.e_ping
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(StreamResponse_Ping)
-		err := b.DecodeMessage(msg)
-		m.Event = &StreamResponse_EPing{msg}
-		return true, err
-	case 3: // event.e_pulse
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(StreamResponse_Pulse)
-		err := b.DecodeMessage(msg)
-		m.Event = &StreamResponse_EPulse{msg}
-		return true, err
-	case 4: // event.e_status
-		if wire != proto.WireBytes {
-			return true, proto.ErrInternalBadWireType
-		}
-		msg := new(StreamResponse_Status)
-		err := b.DecodeMessage(msg)
-		m.Event = &StreamResponse_EStatus{msg}
-		return true, err
-	default:
-		return false, nil
-	}
-}
-
-func _StreamResponse_OneofSizer(msg proto.Message) (n int) {
-	m := msg.(*StreamResponse)
-	// event
-	switch x := m.Event.(type) {
-	case *StreamResponse_EDo:
-		s := proto.Size(x.EDo)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *StreamResponse_EPing:
-		s := proto.Size(x.EPing)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *StreamResponse_EPulse:
-		s := proto.Size(x.EPulse)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case *StreamResponse_EStatus:
-		s := proto.Size(x.EStatus)
-		n += 1 // tag and wire
-		n += proto.SizeVarint(uint64(s))
-		n += s
-	case nil:
-	default:
-		panic(fmt.Sprintf("proto: unexpected type %T in oneof", x))
-	}
-	return n
 }
 
 type StreamResponse_Do struct {
@@ -833,6 +733,20 @@ type MarabuntaServer interface {
 	Payload(context.Context, *PayloadRequest) (*PayloadResponse, error)
 	Stream(Marabunta_StreamServer) error
 	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
+}
+
+// UnimplementedMarabuntaServer can be embedded to have forward compatible implementations.
+type UnimplementedMarabuntaServer struct {
+}
+
+func (*UnimplementedMarabuntaServer) Payload(ctx context.Context, req *PayloadRequest) (*PayloadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Payload not implemented")
+}
+func (*UnimplementedMarabuntaServer) Stream(srv Marabunta_StreamServer) error {
+	return status.Errorf(codes.Unimplemented, "method Stream not implemented")
+}
+func (*UnimplementedMarabuntaServer) Update(ctx context.Context, req *UpdateRequest) (*UpdateResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 
 func RegisterMarabuntaServer(s *grpc.Server, srv MarabuntaServer) {
